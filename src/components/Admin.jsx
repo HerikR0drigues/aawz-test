@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-
 function Admin({ adicionarUsuario }) {
-    // Função para limpar todos os usuários do localStorage com confirmação
+    // Função para limpar todos os usuários do localStorage com confirmação, ele envia para o app.jsx onde contem a funcao que faz a excluzão.
     const limparUsuarios = () => {
         const confirmar = window.confirm('Você realmente deseja remover todos os usuários cadastrados?');
         if (confirmar) {
@@ -9,6 +7,7 @@ function Admin({ adicionarUsuario }) {
         }
     };
 
+    // Função para importar usuarios para o localStorage, ele envia para o app.jsx onde contem a funcao que faz a excluzão.
     const importarUsuarios = () => {
         const confirmar = window.confirm('Você realmente deseja importar a base de usuários?');
         if (confirmar) {
@@ -30,7 +29,7 @@ function Admin({ adicionarUsuario }) {
                     </button>
                     <button
                         type="button"
-                        onClick={limparUsuarios} // Chama a função para limpar os usuários no localStorage
+                        onClick={limparUsuarios}
                         className="text-red-700 hover:text-white border-2 border-red-700 hover:bg-red-800 w-full md:w-1/2 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                         Remover todos os usuários cadastrados
                     </button>

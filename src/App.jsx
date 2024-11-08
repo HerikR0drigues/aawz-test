@@ -13,18 +13,19 @@ function App() {
     return savedData ? JSON.parse(savedData) : [];
   });
 
-
-
+  // Funcao que lida com os usuários cadastrado, ele adiciona, exclui e importa
   const adicionarUsuario = (novoUsuario) => {
     let updatedUsuarios;
 
+    //No componente ADMIN temos 2 (dois) botoes, de excluir todos e importar usuarios, esses botoes acionam essa funcao
+    // Funcao de deletar
     if (novoUsuario === "deleteAll") {
       updatedUsuarios = [];
       setUsuarios(updatedUsuarios);
       localStorage.setItem("formData", JSON.stringify(updatedUsuarios));
-
+      // Funcao de importar
     } else if (novoUsuario === "import") {
-      fetch('https://estudoherikr0drigues.s3.eu-north-1.amazonaws.com/usuarios.json')
+      fetch('https://estudoherikr0drigues.s3.eu-north-1.amazonaws.com/usuarios.json') // Arquivo JSON com usuarios previamente gerados
         .then(response => response.json())
         .then(data => {
           setUsuarios(data);
@@ -34,6 +35,7 @@ function App() {
           console.error('Erro ao carregar o arquivo JSON:', error);
         });
     } else {
+      // Acaba caindo aqui o botao do formulario de cadastro
       updatedUsuarios = [...usuarios, novoUsuario];
       setUsuarios(updatedUsuarios);
       localStorage.setItem("formData", JSON.stringify(updatedUsuarios));
@@ -50,13 +52,13 @@ function App() {
           <TabelaUsuarios usuarios={usuarios} />
         </div>
 
-        <div className="font-sofia w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          <Admin adicionarUsuario={adicionarUsuario} />
-        </div>
-
         <div className="font-sofia justify-between w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <DistribuicaoPorEstado usuarios={usuarios} />
           <DistribuicaoPorOrigem usuarios={usuarios} />
+        </div>
+
+        <div className="font-sofia w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+          <Admin adicionarUsuario={adicionarUsuario} />
         </div>
       </main>
 

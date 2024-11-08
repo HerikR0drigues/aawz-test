@@ -11,17 +11,31 @@ function FormularioCadastro({ adicionarUsuario }) {
         complemento: '',
         cidade: '',
         estado: '',
-        origin: "digital",
+        origin: '',
     });
 
+    // Funcao para alterar o estado formData assim que algum input do formulario eh alterado
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Funcao para capturar o input do CEP e preenher os outros campos usando API do viacep
     const handleCepBlur = async () => {
+
+        if(formData.cep === '') {
+            return
+        }
+
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${formData.cep}/json/`);
+            console.log(formData.cep)
+            //As vezes quando o formato do cep ta certo mas o nao encontra na base de dados do viacep, a api nao retorna erro, apenas um erro dentro de data, por isso esse if.
+            if ( response.data.erro) {
+                throw new Error("CEP não encontrado");
+            }
+
             const { logradouro, localidade, uf } = response.data;
+            console.log(response)
             setFormData({
                 ...formData,
                 endereco: logradouro,
@@ -30,19 +44,23 @@ function FormularioCadastro({ adicionarUsuario }) {
             });
         } catch (error) {
             alert("CEP não encontrado. Verifique o número e tente novamente.");
+            setFormData({
+                ...formData,
+                endereco: '',
+                cidade: '',
+                estado: '',
+                cep: ''
+            });
         }
     };
 
+    // Funcao para lidar com o envio do formulário
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const existingFormData = JSON.parse(localStorage.getItem("formData")) || [];
-
         const updatedFormData = Array.isArray(existingFormData) ? [...existingFormData, formData] : [formData];
-
         localStorage.setItem("formData", JSON.stringify(updatedFormData));
-
-        const savedData = localStorage.getItem('formData');
 
         setFormData({
             nome: '',
@@ -60,7 +78,7 @@ function FormularioCadastro({ adicionarUsuario }) {
 
     };
 
-
+    // Toda a div do formulario com os efeites do Tailwind para ficar bonitinho
     return (
         <div className='md:w-2/5'>
             <form onSubmit={handleSubmit} className="space-y-6 p-6 bg-aawzBlack rounded-2xl shadow-lg border-2 border-aawzMain">
