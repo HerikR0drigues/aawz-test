@@ -47,10 +47,10 @@ function App() {
       <Header />
 
       <main className="flex flex-col items-center px-4 py-8 space-y-4 flex-grow">
-        <div className="font-sofia justify-between w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          <FormularioCadastro adicionarUsuario={adicionarUsuario} />
-          <TabelaUsuarios usuarios={usuarios} />
-        </div>
+      <div className="md:h-[630px] font-sofia justify-between w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <FormularioCadastro adicionarUsuario={adicionarUsuario} />
+        <TabelaUsuarios usuarios={usuarios} />
+      </div>
 
         <div className="font-sofia justify-between w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <DistribuicaoPorEstado usuarios={usuarios} />

@@ -80,8 +80,8 @@ function FormularioCadastro({ adicionarUsuario }) {
 
     // Toda a div do formulario com os efeites do Tailwind para ficar bonitinho
     return (
-        <div className='md:w-2/5'>
-            <form onSubmit={handleSubmit} className="space-y-6 p-6 bg-aawzBlack rounded-2xl shadow-lg border-2 border-aawzMain">
+        <div className='md:w-2/5 h-full'>
+            <form onSubmit={handleSubmit} className="space-y-6 p-6 bg-aawzBlack rounded-2xl shadow-lg border-2 border-aawzMain h-full">
                 <h2 className="text-2xl font-bold text-aawzMain mb-6 text-center">Formulário de Cadastro</h2>
 
                 <div className="relative z-0 w-full group">
