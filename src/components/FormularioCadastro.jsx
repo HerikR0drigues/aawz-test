@@ -11,7 +11,7 @@ function FormularioCadastro({ adicionarUsuario }) {
         complemento: '',
         cidade: '',
         estado: '',
-        origin: '',
+        origin: 'digital',
     });
 
     // Funcao para alterar o estado formData assim que algum input do formulario eh alterado
@@ -28,14 +28,12 @@ function FormularioCadastro({ adicionarUsuario }) {
 
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${formData.cep}/json/`);
-            console.log(formData.cep)
             //As vezes quando o formato do cep ta certo mas o nao encontra na base de dados do viacep, a api nao retorna erro, apenas um erro dentro de data, por isso esse if.
             if ( response.data.erro) {
                 throw new Error("CEP não encontrado");
             }
 
             const { logradouro, localidade, uf } = response.data;
-            console.log(response)
             setFormData({
                 ...formData,
                 endereco: logradouro,
