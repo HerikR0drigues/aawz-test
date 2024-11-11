@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+import { BsTrash3 } from "react-icons/bs";
 
-function TabelaUsuarios({ usuarios }) {
+function TabelaUsuarios({ usuarios, onDelete}) {
     const [expandedIndex, setExpandedIndex] = useState(null);
 
     // Funcao para lidar com o click na div de cada usuario, usamos para expandir ou nao.
     const toggleExpand = (index) => {
         setExpandedIndex(index === expandedIndex ? null : index);
+    };
+
+    // Funcao para excluir um único usuário
+    const handleDelete = (index) => {
+        const confirmar = window.confirm('Você realmente deseja excluir esse usuário?');
+        if (confirmar) {
+            onDelete(index);
+        }
     };
 
     return (
@@ -18,9 +27,18 @@ function TabelaUsuarios({ usuarios }) {
                             <div
                                 key={index}
                                 onClick={() => toggleExpand(index)}
-                                className={`bg-aawzBlack px-4 py-2 rounded-md shadow-md cursor-pointer transition-all duration-300 border-2 border-aawzThird hover:border-aawzSecondary hover:bg-zinc-800 ${expandedIndex === index ? 'max-h-full' : 'max-h-20'
+                                className={`bg-aawzBlack px-4 py-2 relative rounded-md shadow-md cursor-pointer transition-all duration-300 border-2 border-aawzThird hover:border-aawzSecondary hover:bg-zinc-800 ${expandedIndex === index ? 'max-h-full' : 'max-h-20'
                                     }`}
                             >
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDelete(index);
+                                    }}
+                                    className="absolute top-2 right-2 text-red-500 hover:text-red-900"
+                                >
+                                    <BsTrash3 />
+                                </button>
                                 <p className="text-gray-300 font-bold text-sm"><strong>Nome:</strong> {usuario.nome}</p>
                                 <p className="text-gray-300 text-sm"><strong>Email:</strong> {usuario.email}</p>
                                 {expandedIndex === index && ( // Expande caso seja true

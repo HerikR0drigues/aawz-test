@@ -42,6 +42,14 @@ function App() {
     }
   };
 
+  // Funcao para excluir um único usuário
+  const handleDelete = (index) => {
+    const updatedUsuarios = usuarios.filter((_, i) => i !== index);
+    setUsuarios(updatedUsuarios);
+    localStorage.setItem("formData", JSON.stringify(updatedUsuarios));
+};
+
+
   return (
     <div className="min-h-screen bg-aawzBlack flex flex-col">
       <Header />
@@ -49,7 +57,7 @@ function App() {
       <main className="flex flex-col items-center px-4 py-8 space-y-4 flex-grow">
       <div className="md:h-[630px] font-sofia justify-between w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <FormularioCadastro adicionarUsuario={adicionarUsuario} />
-        <TabelaUsuarios usuarios={usuarios} />
+        <TabelaUsuarios usuarios={usuarios} onDelete={handleDelete}  />
       </div>
 
         <div className="font-sofia justify-between w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
@@ -58,7 +66,7 @@ function App() {
         </div>
 
         <div className="font-sofia w-full max-w-5xl flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          <Admin adicionarUsuario={adicionarUsuario} />
+          <Admin adicionarUsuario={adicionarUsuario}/>
         </div>
       </main>
 
